@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { config, isApiKeyConfigured } from './config'
 
 interface GenerateResponse {
   results: string[]
@@ -19,6 +20,7 @@ export default function Home() {
   const [results, setResults] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [debugInfo, setDebugInfo] = useState('')
 
   const handleGenerate = async () => {
     if (!prompt.trim()) {
@@ -29,21 +31,27 @@ export default function Home() {
     setLoading(true)
     setError('')
     setResults([])
+    setDebugInfo(`API Key present: ${isApiKeyConfigured() ? 'Yes' : 'No'}, Length: ${config.openRouterApiKey.length}`)
 
     try {
+      // Check if API key is configured
+      if (!isApiKeyConfigured()) {
+        throw new Error('API key chưa được cấu hình. Vui lòng kiểm tra cài đặt.')
+      }
+
       // Call OpenRouter API directly from client
       const userPrompt = `Hãy viết một ${contentType} cho chủ đề: ${prompt.trim()}`
       
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      const response = await fetch(config.apiEndpoint, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENROUTER_API_KEY}`,
+          'Authorization': `Bearer ${config.openRouterApiKey}`,
           'Content-Type': 'application/json',
           'HTTP-Referer': window.location.origin,
           'X-Title': 'AI Content Creator',
         },
         body: JSON.stringify({
-          model: 'openai/gpt-3.5-turbo',
+          model: config.model,
           messages: [
             {
               role: 'system',
@@ -255,6 +263,18 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   {error}
+                </div>
+              </div>
+            )}
+
+            {/* Debug Info */}
+            {debugInfo && (
+              <div className="bg-blue-50 border-l-4 border-blue-400 text-blue-700 px-6 py-4 rounded-lg shadow-sm">
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Debug: {debugInfo}
                 </div>
               </div>
             )}
