@@ -4,7 +4,7 @@
 
 <div align="center">
   
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Try_It_Now-brightgreen?style=for-the-badge&logo=vercel)](https://huybui111.github.io/AIContentCreator/)
+[![Live Demo](https://img.shields.io/badge/🚀_LIVE_DEMO-Try_Now-ff6b6b?style=for-the-badge&labelColor=4c6ef5&logoColor=white)](https://huybui111.github.io/AIContentCreator/)
 
 </div>
 
