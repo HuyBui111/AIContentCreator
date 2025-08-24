@@ -8,6 +8,10 @@
   <img src="https://github.com/user-attachments/assets/4af6864a-1647-4356-b189-7269c048c412" alt="AI Content Creator" width="600" />
 </div>
 
+<div align="center">
+  <img width="600" alt="image" src="https://github.com/user-attachments/assets/0b7efcc2-2580-4ed0-9cc5-4879ebb9d834" />
+</div>
+
 ## ✨ Features
 
 - **Smart Content Generation** - Create social captions, blog intros, and SEO titles
