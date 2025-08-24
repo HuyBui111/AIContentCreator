@@ -2,6 +2,9 @@
 
 Ứng dụng web full-stack tạo nội dung sáng tạo bằng AI, sử dụng Next.js 14 và OpenRouter API.
 
+<img width="1898" height="1079" alt="image" src="https://github.com/user-attachments/assets/4af6864a-1647-4356-b189-7269c048c412" />
+<img width="1901" height="1072" alt="image" src="https://github.com/user-attachments/assets/af344d10-33a9-4187-90fc-a88575c038ba" />
+
 ## Tính năng
 
 - 🎯 **3 loại nội dung**: Social Caption, Blog Intro, SEO Title
