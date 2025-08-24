@@ -33,7 +33,7 @@ jobs:
       - name: Build project
         run: npm run build
         env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          NEXT_PUBLIC_OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

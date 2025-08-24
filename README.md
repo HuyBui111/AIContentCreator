@@ -1,6 +1,6 @@
 # AI Content Creator
 
-Ứng dụng web full-stack tạo nội dung sáng tạo bằng AI, sử dụng Next.js 14 và OpenRouter API.
+Ứng dụng web tạo nội dung sáng tạo bằng AI, sử dụng Next.js 14 và OpenRouter API. Được deploy tự động lên GitHub Pages.
 
 <img width="1898" height="1079" alt="image" src="https://github.com/user-attachments/assets/4af6864a-1647-4356-b189-7269c048c412" />
 <img width="1901" height="1072" alt="image" src="https://github.com/user-attachments/assets/af344d10-33a9-4187-90fc-a88575c038ba" />
@@ -8,13 +8,14 @@
 ## Tính năng
 
 - 🎯 **3 loại nội dung**: Social Caption, Blog Intro, SEO Title
-- 🤖 **AI thông minh**: Sử dụng Google Gemma-2-9B qua OpenRouter
+- 🤖 **AI thông minh**: Sử dụng GPT-3.5-turbo qua OpenRouter
 - 📱 **Responsive**: Giao diện đẹp trên mọi thiết bị
 - ⚡ **Nhanh chóng**: Tạo 3 phiên bản nội dung cùng lúc
 - 📋 **Copy dễ dàng**: Sao chép kết quả chỉ với 1 click
 - ✨ **Hiệu ứng mượt**: Animation fade-in cho kết quả
+- 🚀 **Static deployment**: Hoạt động hoàn toàn trên GitHub Pages
 
-## Cài đặt
+## Cài đặt cho Development
 
 1. **Clone và cài đặt dependencies:**
    ```bash
@@ -24,9 +25,9 @@
 
 2. **Cấu hình API Key:**
    - Tạo tài khoản tại [OpenRouter](https://openrouter.ai/)
-   - Lấy API key và thay thế trong file `.env.local`:
+   - Tạo file `.env.local` và thêm API key:
    ```
-   OPENROUTER_API_KEY=your_actual_api_key_here
+   NEXT_PUBLIC_OPENROUTER_API_KEY=your_actual_api_key_here
    ```
 
 3. **Chạy ứng dụng:**
@@ -35,6 +36,24 @@
    ```
 
 4. **Mở trình duyệt:** http://localhost:3000
+
+## Deployment lên GitHub Pages
+
+1. **Cấu hình GitHub Secrets:**
+   - Vào Settings > Secrets and variables > Actions
+   - Thêm secret: `OPENROUTER_API_KEY` với giá trị API key của bạn
+
+2. **Push code lên GitHub:**
+   ```bash
+   git add .
+   git commit -m "Deploy to GitHub Pages"
+   git push origin main
+   ```
+
+3. **GitHub Actions sẽ tự động:**
+   - Build ứng dụng với static export
+   - Deploy lên GitHub Pages
+   - App sẽ có sẵn tại: `https://yourusername.github.io/AIContentCreator`
 
 ## Cách sử dụng
 

@@ -31,29 +31,110 @@ export default function Home() {
     setResults([])
 
     try {
-      const response = await fetch('/api/generate', {
+      // Call OpenRouter API directly from client
+      const userPrompt = `Hãy viết một ${contentType} cho chủ đề: ${prompt.trim()}`
+      
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
+          'HTTP-Referer': window.location.origin,
+          'X-Title': 'AI Content Creator',
         },
         body: JSON.stringify({
-          prompt: prompt.trim(),
-          type: contentType,
+          model: 'openai/gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: 'You are a helpful AI assistant. Always respond in clear, natural Vietnamese. Make answers concise, accurate, and easy to understand. Create exactly 3 different versions, each on a new line, numbered 1., 2., 3.'
+            },
+            {
+              role: 'user',
+              content: userPrompt
+            }
+          ],
+          temperature: 0.8,
+          max_tokens: 500,
         }),
       })
 
-      const data: GenerateResponse = await response.json()
-
       if (!response.ok) {
-        throw new Error(data.error || 'Có lỗi xảy ra')
+        let errorMessage = 'Lỗi từ OpenRouter API'
+        if (response.status === 401) {
+          errorMessage = 'API key không hợp lệ. Vui lòng kiểm tra cấu hình.'
+        } else if (response.status === 429) {
+          errorMessage = 'Đã vượt quá giới hạn request. Vui lòng thử lại sau.'
+        } else if (response.status === 400) {
+          errorMessage = 'Yêu cầu không hợp lệ'
+        }
+        throw new Error(`${errorMessage} (${response.status})`)
       }
 
-      setResults(data.results)
+      const data = await response.json()
+      const content = data.choices?.[0]?.message?.content
+
+      if (!content) {
+        throw new Error('Không nhận được phản hồi từ AI')
+      }
+
+      // Parse the response to extract the 3 versions
+      const results = parseAIResponse(content)
+      setResults(results)
+
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Có lỗi xảy ra')
+      setError(err instanceof Error ? err.message : 'Có lỗi xảy ra khi kết nối với AI')
     } finally {
       setLoading(false)
     }
+  }
+
+  const parseAIResponse = (content: string): string[] => {
+    // Try to extract numbered list items (1., 2., 3.)
+    const numberedMatches = content.match(/^\d+\.\s*(.+?)(?=^\d+\.|$)/gms)
+    
+    if (numberedMatches && numberedMatches.length >= 3) {
+      return numberedMatches.slice(0, 3).map(match => 
+        match.replace(/^\d+\.\s*/, '').trim()
+      )
+    }
+
+    // Try to extract items with dashes or bullets
+    const bulletMatches = content.match(/^[-*•]\s*(.+?)(?=^[-*•]|$)/gms)
+    
+    if (bulletMatches && bulletMatches.length >= 3) {
+      return bulletMatches.slice(0, 3).map(match => 
+        match.replace(/^[-*•]\s*/, '').trim()
+      )
+    }
+
+    // Split by double newlines and filter meaningful content
+    const parts = content
+      .split(/\n\n+/)
+      .map(part => part.trim())
+      .filter(part => part.length > 15 && !part.match(/^(phiên bản|version)/i))
+
+    if (parts.length >= 3) {
+      return parts.slice(0, 3)
+    }
+
+    // Split by single newlines as fallback
+    const lines = content
+      .split(/\n/)
+      .map(line => line.trim())
+      .filter(line => line.length > 20 && !line.match(/^(phiên bản|version|\d+\.)/i))
+
+    if (lines.length >= 3) {
+      return lines.slice(0, 3)
+    }
+
+    // If we still can't parse, create variations manually
+    const baseContent = content.trim()
+    return [
+      baseContent,
+      baseContent + ' 🌟',
+      baseContent + ' ✨'
+    ]
   }
 
   const copyToClipboard = async (text: string) => {
