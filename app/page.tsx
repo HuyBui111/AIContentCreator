@@ -20,7 +20,6 @@ export default function Home() {
   const [results, setResults] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [debugInfo, setDebugInfo] = useState('')
 
   const handleGenerate = async () => {
     if (!prompt.trim()) {
@@ -31,7 +30,6 @@ export default function Home() {
     setLoading(true)
     setError('')
     setResults([])
-    setDebugInfo(`API Key present: ${isApiKeyConfigured() ? 'Yes' : 'No'}, Length: ${config.openRouterApiKey.length}`)
 
     try {
       // Check if API key is configured
@@ -267,17 +265,6 @@ export default function Home() {
               </div>
             )}
 
-            {/* Debug Info */}
-            {debugInfo && (
-              <div className="bg-blue-50 border-l-4 border-blue-400 text-blue-700 px-6 py-4 rounded-lg shadow-sm">
-                <div className="flex items-center">
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Debug: {debugInfo}
-                </div>
-              </div>
-            )}
           </div>
         </div>
 
