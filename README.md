@@ -2,14 +2,14 @@
 
 > Generate creative content instantly with AI-powered assistance
 
-**🌐 [Live Demo](https://huybui111.github.io/AIContentCreator/)**
-
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/4af6864a-1647-4356-b189-7269c048c412" alt="AI Content Creator" width="600" />
+  
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Try_It_Now-brightgreen?style=for-the-badge&logo=vercel)](https://huybui111.github.io/AIContentCreator/)
+
 </div>
 
 <div align="center">
-  <img width="600" alt="image" src="https://github.com/user-attachments/assets/0b7efcc2-2580-4ed0-9cc5-4879ebb9d834" />
+  <img src="https://github.com/user-attachments/assets/4af6864a-1647-4356-b189-7269c048c412" alt="AI Content Creator" width="600" />
 </div>
 
 ## ✨ Features
@@ -45,8 +45,6 @@ Visit `http://localhost:3000` to see your app running.
 ## 🌍 Deploy
 
 Push to GitHub and enable GitHub Pages. The app will automatically build and deploy.
-
-**Live Demo:** [AI Content Creator](https://huybui111.github.io/AIContentCreator/)
 
 ## 🛠️ Built With
 
