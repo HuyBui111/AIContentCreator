@@ -3,13 +3,14 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  output: 'export',
-  trailingSlash: true,
-  images: {
-    unoptimized: true,
-  },
-  basePath: '/AIContentCreator',
-  assetPrefix: '/AIContentCreator/',
+  // Comment out these lines for local development
+  // output: 'export',
+  // trailingSlash: true,
+  // images: {
+  //   unoptimized: true,
+  // },
+  // basePath: '/AIContentCreator',
+  // assetPrefix: '/AIContentCreator/',
 }
 
 module.exports = nextConfig
